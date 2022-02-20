@@ -1,0 +1,19 @@
+{
+  "name": "gifconverter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "danbfs",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "snowpack dev"
+  },
+  "devDependencies": {
+    "snowpack": "^3.8.8"
+  },
+  "dependencies": {
+    "@ffmpeg/core": "^0.10.0",
+    "@ffmpeg/ffmpeg": "^0.10.1",
+    "fs": "^0.0.1-security"
+  }
+}
