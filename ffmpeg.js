@@ -23,6 +23,9 @@ export const run = async () => {
     videoUrl = e.target.files?.item(0);
     video.src = URL.createObjectURL(videoUrl);
     convertButton.disabled = false;
+    video.onloadedmetadata = () => {
+      durationInput.value = video.duration;
+    };
   };
 
   const convertToGif = async () => {
