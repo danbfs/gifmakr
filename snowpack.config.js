@@ -1,11 +1,9 @@
 const fs = require("fs");
 
 module.exports = {
-  devOptions: {
-    responseHeaders: {
-      "Cross-Origin-Embedder-Policy": "require-corp",
-      "Cross-Origin-Opener-Policy": "same-origin",
-    },
+  mount: {
+    public: { url: "/", static: true },
+    src: "/dist",
   },
   routes: [
     {
@@ -22,7 +20,7 @@ module.exports = {
         res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
         res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
 
-        return fs.createReadStream("index.html").pipe(res);
+        return fs.createReadStream("public/index.html").pipe(res);
       },
     },
   ],
