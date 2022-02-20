@@ -15,6 +15,10 @@ export const run = async () => {
 
   const image = document.getElementById("gif");
 
+  const durationInput = document.getElementById("duration");
+
+  const initialTimeInput = document.getElementById("initialtime");
+
   input.onchange = (e) => {
     videoUrl = e.target.files?.item(0);
     video.src = URL.createObjectURL(videoUrl);
@@ -22,6 +26,29 @@ export const run = async () => {
   };
 
   const convertToGif = async () => {
+    const gifDuration = durationInput.value;
+    const gifInitialTime = initialTimeInput.value;
+
+    if (gifInitialTime > video.duration) {
+      alert(
+        `Initial time can't be greater than video duration (${video.duration} seconds)`
+      );
+      return;
+    }
+
+    if (gifDuration <= 0) {
+      alert("Minimum duration is 0.1s");
+      return;
+    }
+
+    const totalTime = parseFloat(gifInitialTime) + parseFloat(gifDuration);
+
+    if (parseFloat(gifInitialTime) + parseFloat(gifDuration) > video.duration) {
+      alert(
+        `Initial time + duration (${totalTime}s) exceeds video length (${video.duration}s)`
+      );
+      return;
+    }
     convertButton.disabled = true;
     convertButton.innerText = "Converting...";
     // Write the file to memory
@@ -32,9 +59,9 @@ export const run = async () => {
       "-i",
       "test.mp4",
       "-t",
-      "2.5",
+      gifDuration,
       "-ss",
-      "2.0",
+      gifInitialTime,
       "-f",
       "gif",
       "out.gif"

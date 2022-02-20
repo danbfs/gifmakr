@@ -9,6 +9,20 @@
   <body id="main">
     <video id="player" controls></video>
     <input type="file" id="videoinput" />
+    <div id="inputgroup">
+      <label for="duration">Duration:</label>
+
+      <input type="number" id="duration" name="duration" min="0" value="10" />
+      <label for="initialtime">Initial time:</label>
+
+      <input
+        type="number"
+        id="initialtime"
+        name="initialtime"
+        min="0"
+        value="0"
+      />
+    </div>
     <button disabled="true" id="gifconverter">Convert to GIF</button>
     <img id="gif" />
   </body>
