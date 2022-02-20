@@ -1,0 +1,12 @@
+#main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-around;
+  gap: 24px;
+  width: 100vw;
+}
+
+#main > * {
+  width: 60%;
+}

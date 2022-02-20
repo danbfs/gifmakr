@@ -11,12 +11,19 @@ export const run = async () => {
 
   const input = document.getElementById("videoinput");
 
+  const convertButton = document.getElementById("gifconverter");
+
+  const image = document.getElementById("gif");
+
   input.onchange = (e) => {
     videoUrl = e.target.files?.item(0);
     video.src = URL.createObjectURL(videoUrl);
+    convertButton.disabled = false;
   };
 
   const convertToGif = async () => {
+    convertButton.disabled = true;
+    convertButton.innerText = "Converting...";
     // Write the file to memory
     ffmpeg.FS("writeFile", "test.mp4", await fetchFile(videoUrl));
 
@@ -40,12 +47,11 @@ export const run = async () => {
     const url = URL.createObjectURL(
       new Blob([data.buffer], { type: "image/gif" })
     );
-    const image = document.getElementById("gif");
 
     image.src = url;
+    convertButton.disabled = false;
+    convertButton.innerText = "Convert to GIF";
   };
-
-  const convertButton = document.getElementById("gifconverter");
 
   convertButton.onclick = convertToGif;
 };

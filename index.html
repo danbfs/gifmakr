@@ -6,11 +6,11 @@
     <meta name="description" content="Starter Snowpack App" />
     <title>Starter Snowpack App</title>
   </head>
-  <body>
-    <video id="player" controls width="250"></video>
+  <body id="main">
+    <video id="player" controls></video>
     <input type="file" id="videoinput" />
-    <button id="gifconverter">Convert to GIF</button>
-    <img id="gif" width="250" />
+    <button disabled="true" id="gifconverter">Convert to GIF</button>
+    <img id="gif" />
   </body>
   <script type="module" src="/index.js"></script>
 </html>
