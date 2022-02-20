@@ -7,13 +7,13 @@ export const run = async () => {
 
   await ffmpeg.load();
 
-  const video = document.getElementById("video");
+  const video = document.getElementById("player");
 
   const input = document.getElementById("videoinput");
 
   input.onchange = (e) => {
     videoUrl = e.target.files?.item(0);
-    console.log(videoUrl);
+    video.src = URL.createObjectURL(videoUrl);
   };
 
   const convertToGif = async () => {
