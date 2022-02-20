@@ -1,17 +1,51 @@
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 
-export const run = () => {
+export const run = async () => {
+  let videoUrl;
+
   const ffmpeg = createFFmpeg({ log: true });
-  const transcode = async ({ target: { files } }) => {
-    const { name } = files[0];
-    await ffmpeg.load();
-    ffmpeg.FS("writeFile", name, await fetchFile(files[0]));
-    await ffmpeg.run("-i", name, "output.mp4");
-    const data = ffmpeg.FS("readFile", "output.mp4");
-    const video = document.getElementById("player");
-    video.src = URL.createObjectURL(
-      new Blob([data.buffer], { type: "video/mp4" })
-    );
+
+  await ffmpeg.load();
+
+  const video = document.getElementById("video");
+
+  const input = document.getElementById("videoinput");
+
+  input.onchange = (e) => {
+    videoUrl = e.target.files?.item(0);
+    console.log(videoUrl);
   };
-  document.getElementById("uploader").addEventListener("change", transcode);
+
+  const convertToGif = async () => {
+    // Write the file to memory
+    ffmpeg.FS("writeFile", "test.mp4", await fetchFile(videoUrl));
+
+    // Run the FFMpeg command
+    await ffmpeg.run(
+      "-i",
+      "test.mp4",
+      "-t",
+      "2.5",
+      "-ss",
+      "2.0",
+      "-f",
+      "gif",
+      "out.gif"
+    );
+
+    // Read the result
+    const data = ffmpeg.FS("readFile", "out.gif");
+
+    // Create a URL
+    const url = URL.createObjectURL(
+      new Blob([data.buffer], { type: "image/gif" })
+    );
+    const image = document.getElementById("gif");
+
+    image.src = url;
+  };
+
+  const convertButton = document.getElementById("gifconverter");
+
+  convertButton.onclick = convertToGif;
 };
